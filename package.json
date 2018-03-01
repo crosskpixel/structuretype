@@ -29,7 +29,7 @@
     "mysql2": "1.5.1",
     "nodemailer": "^4.4.0",
     "request": "^2.83.0",
-    "sequelize": "4.23.2",
+    "sequelize": "^4.23.2",
     "socket.io": "^2.0.4",
     "typescript": "^2.7.2"
   },
@@ -47,9 +47,22 @@
     "mysql2": "1.5.1",
     "nodemailer": "^4.4.0",
     "request": "^2.83.0",
-    "sequelize": "4.23.2",
     "socket.io": "^2.0.4",
     "typescript": "^2.7.2",
     "morgan": "^1.9.0"
+  },
+  "production": {
+    "url": "192.168.2.63",
+    "database": "database",
+    "user": "user",
+    "password": "password",
+    "dialect": "mysql"
+  },
+  "dev": {
+    "url": "localhost",
+    "database": "database",
+    "user": "root",
+    "password": "macinfo",
+    "dialect": "mysql"
   }
 }

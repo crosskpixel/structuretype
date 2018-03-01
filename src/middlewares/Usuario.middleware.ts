@@ -1,4 +1,4 @@
-module.exports.validaCNPJ = (cnpj: string = "") => {
+export const validaCNPJ = (cnpj: string = "") => {
     cnpj = cnpj.replace(/[^\d]+/g, '');
 
     if (cnpj == '') {
@@ -53,7 +53,7 @@ module.exports.validaCNPJ = (cnpj: string = "") => {
     return true;
 }
 
-module.exports.validaCPF = (strCPF = "") => {
+export const validaCPF = (strCPF = "") => {
     let regex = /[`~!@#$%^&*()_|+\-=÷¿?;:'",.<>\{\}\[\]\\\/]/gi;
     strCPF = strCPF.replace(regex, "");
     var Soma;
@@ -76,27 +76,12 @@ module.exports.validaCPF = (strCPF = "") => {
     return true;
 }
 
-module.exports.validateSchema = (schema) => (req, res, next) => {
-    req.check(schema);
-    req.getValidationResult()
-        .then(result => {
-            if (result.isEmpty() !== true) {
-                res.status(422).json(result.array());
-                return;
-            }
-            next();
-        })
-        .catch(ex => {
-            next(ex);
-        });
-}
-
-module.exports.validateEmail = (email) => {
+export const validateEmail = (email) => {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
 }
 export const customValidators = {
-    isCpf: (cpf) => this.validaCPF(cpf),
-    isCnpj: (cnpj) => this.validaCNPJ(cnpj),
-    isEmail: (email) => this.validateEmail(email)
+    isCpf: (cpf) => validaCPF(cpf),
+    isCnpj: (cnpj) => validaCNPJ(cnpj),
+    isEmail: (email) => validateEmail(email)
 }

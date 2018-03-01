@@ -2,6 +2,9 @@ import { init } from "./Index";
 class Init {
 
     constructor() {
+
+        
+
         this.defineEnviroment();
     }
 

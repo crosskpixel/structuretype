@@ -7,12 +7,16 @@ import * as cors from 'cors';
 import * as consign from 'consign';
 import * as fs from 'fs';
 import * as expressValidator from 'express-validator';
+
+import { LOAD_MODEL } from "./model/index";
+import { LOAD_MIDDLEWARES } from './middlewares/index';
 // Criando as configurações para o ExpressJS
 class App {
     // Instancia dele
     public express: express.Application;
     constructor() {
         this.express = express();
+        this.database();
         this.config();
         this.middleware();
         this.routes();
@@ -40,8 +44,8 @@ class App {
     }
 
     private middleware(): void {
-        let customValidators = require("./middlewares/index")();
-        this.express.use(expressValidator({customValidators}));
+        let customValidators = LOAD_MIDDLEWARES();
+        this.express.use(expressValidator({ customValidators }));
     }
 
     private routes(): void {
@@ -50,6 +54,10 @@ class App {
             require("./routes/" + file)(this.express);
         });
         //consign().include("dist/routes").into(this.express);
+    }
+    private database(): void {
+        const { sequelize } = LOAD_MODEL();
+        sequelize.sync({ force: false }).then(() => console.log("BASE DE DADOS INICIADA"));
     }
 }
 export default new App().express;

@@ -1,6 +1,7 @@
 import * as fs from 'fs';
-module.exports = () => {
+export const LOAD_MIDDLEWARES = () => {
     const VALIDATORS = {};
+    //customValidators
     fs.readdirSync("dist/middlewares").filter((file, key) => {
         if (file == "index.js") {
             return false;
@@ -8,7 +9,7 @@ module.exports = () => {
         return true;
     }).forEach((file, key) => {
         let { customValidators } = require(__dirname + "/" + file);
-        Object.assign(VALIDATORS, customValidators);
+        Object.assign(VALIDATORS, customValidators || {});
     });
     return VALIDATORS;
 }

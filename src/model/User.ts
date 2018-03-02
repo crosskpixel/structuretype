@@ -24,6 +24,5 @@ export default (sequelize, Sequelize) => {
 			allowNull: false
 		}
 	});
-
 	return User;
 } 

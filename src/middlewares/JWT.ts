@@ -1,25 +1,28 @@
+import { SECRET_KEY } from '../utils/SECRET_KEY';
 import { LOAD_MODEL } from './../model/index';
 import * as crypto from 'crypto';
 import * as jwt from "jsonwebtoken";
-const { db } = LOAD_MODEL();
-const SECRET_KEY = "234567890iuytrew7uyjhn3edxc0e9orfigbhgnvmc0kkkk29384756f12";
+const { user } = LOAD_MODEL();
+
 
 export const login = (username, password) => {
     return new Promise((resolve, reject) => {
-        db.user.findOne({
+        user.findOne({
             where: {
                 username: username
             }
         }).then(user => {
+            console.log(user);
             if (user) {
                 if (crypto.createHmac("md5", SECRET_KEY).update(password).digest("hex") == user.password) {
                     var token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: 60 * 120 });
+                    console.log(token);
                     resolve(token);
                 } else {
-                    reject("Senha incorreta");
+                    reject({ code: 401, msg: "Senha incorreta" });
                 }
             } else {
-                console.log("user incorreto");
+                reject({ code: 204, msg: "Usuario não encontrado" })
             }
         });
     });
@@ -32,9 +35,9 @@ export const authJWT = (req, res, next) => {
         var token = req.headers.authorization.split("Bearer").pop().trim();;
         jwt.verify(token, SECRET_KEY, (err, data) => {
             if (err) {
-                res.status(401).json({ error: 401, msg: "invalid token" });
+                res.status(401).json({ msg: "Token Inválido" });
             } else {
-                req.id = data.id;
+                req["session"] = data;
                 next();
             }
         })

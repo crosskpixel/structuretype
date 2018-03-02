@@ -62,7 +62,7 @@
     "url": "localhost",
     "database": "database",
     "user": "root",
-    "password": "Racquer234",
+    "password": "macinfo",
     "dialect": "mysql"
   }
 }

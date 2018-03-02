@@ -1,3 +1,6 @@
+import { LOAD_MODEL } from "../model/index";
+const { user } = LOAD_MODEL();
+
 export const validaCNPJ = (cnpj: string = "") => {
     cnpj = cnpj.replace(/[^\d]+/g, '');
 
@@ -84,4 +87,20 @@ export const customValidators = {
     isCpf: (cpf) => validaCPF(cpf),
     isCnpj: (cnpj) => validaCNPJ(cnpj),
     isEmail: (email) => validateEmail(email)
+}
+
+export const availableEmail = (_email) => {
+    return new Promise((resolve, reject) => {
+        user.findAll({
+            where: {
+                email: _email
+            }
+        }).then(user => {
+            if (user.length > 0) {
+                reject({ code: 406, msg: "Email já em uso" })
+            } else {
+                resolve(true);
+            }
+        }).catch(err => reject(err));
+    });
 }

@@ -1,11 +1,11 @@
 import * as express from 'express';
-import { Response } from 'express-serve-static-core';
 import { validateSchema } from "../utils/utils";
+import * as ValidationSchemaParamOptions from 'express-validator/shared-typings';
 import { LOAD_MODEL } from './../model/index';
 const db = LOAD_MODEL();
 
 const CHECK_REQUEST_REGISTER = {
-    nome: {
+    name: {
         in: "body",
         isLength: {
             options: [{ min: 1, max: 50 }]
@@ -23,22 +23,33 @@ const CHECK_REQUEST_REGISTER = {
         in: "body",
         isEmail: true,
         errorMessage: "Informe um email Válido"
+    },
+    password: {
+        in: "body",
+        isLength: {
+            options: [{ min: 1, max: 30 }]
+        }
     }
-}
+};
 
 interface Usuario {
-    id:number,
-    nome:string,
-    username:string,
-    email:string
+    name: string,
+    username: string,
+    email: string,
+    password: string
 }
 
 module.exports = (app: express.Application) => {
+
     app.post("/usuarios", validateSchema(CHECK_REQUEST_REGISTER), (req: express.Request, res: express.Response) => {
-       //let {nome,username,email} = req.body;
-        let usuario:Usuario = req.body;
-        console.log(usuario);
-        res.end();
+        let { name, username, email, password }: Usuario = req.body;
+        let usuario: Usuario = { name, username, email, password };
+
+        db.user.create(
+            { ...usuario, email_auth: 1 }
+        ).then(() => {
+            res.end("Gravado");
+        });
     });
 
     app.get("/teste", (req, res) => {
@@ -46,7 +57,7 @@ module.exports = (app: express.Application) => {
             where: {
                 id: 1
             },
-            attributes: { exclude: ["id","createdAt","updatedAt"] }
+            attributes: { exclude: ["id", "createdAt", "updatedAt"] }
         }).then(user => {
             res.json(user);
         });

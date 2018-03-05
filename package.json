@@ -40,16 +40,17 @@
     "ejs": "2.5.7",
     "express": "^4.16.2",
     "express-validator": "4.3.0",
+    "firebase-admin": "^5.9.1",
     "gulp": "^3.9.1",
     "gulp-typescript": "^4.0.1",
     "jsonwebtoken": "^8.1.0",
     "lodash": "4.17.4",
+    "morgan": "^1.9.0",
     "mysql2": "1.5.1",
     "nodemailer": "^4.4.0",
     "request": "^2.83.0",
     "socket.io": "^2.0.4",
-    "typescript": "^2.7.2",
-    "morgan": "^1.9.0"
+    "typescript": "^2.7.2"
   },
   "production": {
     "url": "192.168.2.63",
@@ -62,7 +63,7 @@
     "url": "localhost",
     "database": "database",
     "user": "root",
-    "password": "macinfo",
+    "password": "---",
     "dialect": "mysql"
   }
 }

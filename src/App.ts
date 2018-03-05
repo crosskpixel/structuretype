@@ -49,7 +49,6 @@ class App {
     }
 
     private routes(): void {
-        this.express.get("/", (req, res) => res.send("true"));
         fs.readdirSync("dist/routes").forEach((file, key) => {
             require("./routes/" + file)(this.express);
         });

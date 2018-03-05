@@ -4,12 +4,14 @@ import { UserInterface } from "../model/User";
 import { registrarUsuario } from "../controller/Usuario.controller";
 import { login, authJWT } from "../middlewares/JWT";
 import { LOAD_MODEL } from './../model/index';
+import { verifyTokenFirebase } from "./../firebase/index";
 const db = LOAD_MODEL();
 
 module.exports = (app: express.Application) => {
+
     app.post("/registro", validateSchema(CHECK_REQUEST_REGISTER), (req: express.Request, res: express.Response) => {
         let { name, username, email, password }: UserInterface = req.body;
-        let usuario: UserInterface = { name, username, email, password };
+        let usuario: UserInterface = { name, username, email, password, email_auth: 1, uuid: null };
         registrarUsuario(usuario).then(result => res.json(result))
             .catch(err => res.status(err.code).json({ msg: err.msg }));
     });
@@ -22,6 +24,13 @@ module.exports = (app: express.Application) => {
     app.post("/auth", authJWT, (req: express.Request, res: express.Response) => {
         console.log(req['session'].id);
         res.send({ msg: "Usuario Autenticado" });
+    });
+    app.post("/authFirebase", authJWT, (req: express.Request, res: express.Response) => {
+        res.send("AUTENTICADO COM SUCESSO BROW");
+    });
+
+    app.get("/socket", (req, res) => {
+        app['io'].emit("socket", "Funcionando perfeitamente");
     });
 
 }

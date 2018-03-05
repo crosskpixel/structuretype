@@ -96,6 +96,7 @@ export const availableEmail = (_email) => {
                 email: _email
             }
         }).then(user => {
+            console.log(user.length);
             if (user.length > 0) {
                 reject({ code: 406, msg: "Email já em uso" })
             } else {

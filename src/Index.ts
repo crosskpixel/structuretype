@@ -1,11 +1,15 @@
 import * as http from 'http';
 import * as debug from 'debug';
+import * as fs from 'fs';
 import App from './App';
-var init = () =>{
+//import * as io_server from "socket.io";
+
+var init = () => {
     debug('ts-express:server');
-    const port = normalizePort(process.env.PORT || 3000);
-    App.set('port', port);
-    const server = http.createServer(App);
+    const port = normalizePort(process.env.PORT || 80);
+    App.express.set('port', port);
+    const server = http.createServer(App.express);
+    App.io.attach(server);
     server.listen(port);
     server.on('error', (error: NodeJS.ErrnoException): void => {
         if (error.syscall !== 'listen') throw error;
@@ -35,4 +39,4 @@ var init = () =>{
         else return false;
     }
 }
-export {init};
+export { init };

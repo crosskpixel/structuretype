@@ -7,19 +7,25 @@ import * as cors from 'cors';
 import * as consign from 'consign';
 import * as fs from 'fs';
 import * as expressValidator from 'express-validator';
+import * as io_server from "socket.io";
 
 import { LOAD_MODEL } from "./model/index";
 import { LOAD_MIDDLEWARES } from './middlewares/index';
 // Criando as configurações para o ExpressJS
 class App {
     // Instancia dele
-    public express: express.Application;
+    public express;// express.Application;
+    public io;// io_server;
+
     constructor() {
+        this.io = io_server();
         this.express = express();
         this.database();
         this.config();
+        this.sockets();
         this.middleware();
         this.routes();
+        this.express.io = this.io;
     }
 
     private config(): void {
@@ -52,11 +58,17 @@ class App {
         fs.readdirSync("dist/routes").forEach((file, key) => {
             require("./routes/" + file)(this.express);
         });
-        //consign().include("dist/routes").into(this.express);
     }
+
+    private sockets(): void {
+        fs.readdirSync("dist/socketio").forEach((file, key) => {
+            require("./socketio/" + file)(this.io);
+        });
+    }
+
     private database(): void {
         const { sequelize } = LOAD_MODEL();
         sequelize.sync({ force: false }).then(() => console.log("BASE DE DADOS INICIADA"));
     }
 }
-export default new App().express;
+export default new App();

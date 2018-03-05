@@ -4,13 +4,16 @@ export default (sequelize, Sequelize) => {
 			type: Sequelize.STRING,
 			allowNull: false
 		},
+		uuid: {
+			type: Sequelize.TEXT,
+			allowNull: true
+		},
 		username: {
 			type: Sequelize.STRING,
 			allowNull: false
 		},
 		password: {
-			type: Sequelize.STRING,
-			allowNull: false
+			type: Sequelize.STRING
 		},
 		email: {
 			type: Sequelize.STRING,
@@ -31,5 +34,7 @@ export interface UserInterface {
 	name: string,
 	username: string,
 	email: string,
-	password: string
+	password: string,
+	uuid:string,
+	email_auth:Number
 }

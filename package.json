@@ -34,7 +34,8 @@
     "nodemailer": "^4.4.0",
     "request": "^2.83.0",
     "typescript": "^2.7.2",
-    "socket.io": "^2.0.4"
+    "socket.io": "^2.0.4",
+    "sequelize": "4.37.3"
   },
   "production": {
     "url": "192.168.2.63",

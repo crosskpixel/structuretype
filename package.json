@@ -2,11 +2,11 @@
   "name": "typescriptwithnodejs",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/Init.js",
   "scripts": {
     "start": "set NODE_ENV=production && nodemon dist/Init.js",
-    "test": "set NODE_ENV=test && nodemon dist/Init.js",
-    "dev": "set NODE_ENV=dev && nodemon dist/Init.js"
+    "test": "cross-env NODE_ENV=test && nodemon dist/Init.js",
+    "dev-linux": "NODE_ENV=dev nodemon dist/Init.js"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +23,7 @@
     "body-parser": "1.18.2",
     "consign": "^0.1.6",
     "cors": "2.8.4",
+    "cross-env": "^5.1.6",
     "ejs": "2.5.7",
     "express": "^4.16.2",
     "express-validator": "4.3.0",
@@ -33,9 +34,9 @@
     "mysql2": "1.5.1",
     "nodemailer": "^4.4.0",
     "request": "^2.83.0",
-    "typescript": "^2.7.2",
+    "sequelize": "4.37.3",
     "socket.io": "^2.0.4",
-    "sequelize": "4.37.3"
+    "typescript": "^2.7.2"
   },
   "production": {
     "url": "192.168.2.63",
@@ -45,10 +46,10 @@
     "dialect": "mysql"
   },
   "dev": {
-    "url": "localhost",
+    "url": "192.168.2.51",
     "database": "database",
     "user": "root",
-    "password": "macinfo",
+    "password": "",
     "dialect": "mysql"
   }
 }

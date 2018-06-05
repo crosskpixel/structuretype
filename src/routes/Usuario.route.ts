@@ -4,7 +4,7 @@ import { UserInterface } from "../model/User";
 import { registrarUsuario } from "../controller/Usuario.controller";
 import { login, authJWT } from "../middlewares/JWT";
 import { LOAD_MODEL } from './../model/index';
-import { verifyTokenFirebase } from "./../firebase/index";
+//import { verifyTokenFirebase } from "./../firebase/index";
 const db = LOAD_MODEL();
 
 module.exports = (app: express.Application) => {
@@ -26,7 +26,7 @@ module.exports = (app: express.Application) => {
         res.send({ msg: "Usuario Autenticado" });
     });
     app.post("/authFirebase", authJWT, (req: express.Request, res: express.Response) => {
-        res.send("AUTENTICADO COM SUCESSO BROW");
+        res.send("AUTENTICADO COM SUCESSO");
     });
 
     app.get("/socket", (req, res) => {

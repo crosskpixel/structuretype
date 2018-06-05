@@ -1,4 +1,4 @@
-import * as admin from 'firebase-admin';
+/*import * as admin from 'firebase-admin';
 import { UserInterface } from "../model/User";
 import { registrarUsuario } from "../controller/Usuario.controller";
 
@@ -32,3 +32,4 @@ export const verifyTokenFirebase = (token) => {
 
 
 
+*/
